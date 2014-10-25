@@ -8,25 +8,29 @@ The Allies, in World War II, were pretty keen on knowing just how many armaments
  17 serial numbers, what's a good way of guessing the actual largest serial
  number on any old tank that's out there?" The ensuing methods produced (if
  [Wikipedia](http://en.wikipedia.org/wiki/German_tank_problem#Specific_data) is
- to be believed) one of the greatest statistical success stories I can imagine.
+ to be believed) one of the greatest success stories of statistics I can 
+ imagine.
   
 I am pretty keen on knowing just how many Netflix discs I can watch.
 
 Netflix by Mail
 ===============
 
-I am a subscriber, one disc per month, to Netflix's DVD-by-mail service. I even
-spring for the Blu-Ray package. There are [fewer of us](http://www.theguardian.com/media/2014/jul/22/netflix-dvds-mail-subscription)
+I am a subscriber, one disc at a time (typically two discs per week),
+of Netflix's DVD-by-mail service. I even spring for the Blu-Ray package. There 
+are [fewer of us](http://www.theguardian.com/media/2014/jul/22/netflix-dvds-mail-subscription)
 every month. Trying to make sense of its declining popularity makes me sad and
 a little frustrated. The disc service has an unbeatable selection! It's not, 
 like, an *accidentally* awesome selection -- it's a textbook consequence of 
 copyright law's
 [first-sale doctrine](http://www.eschatonblog.com/2014/10/netflix-mysteries.html).
-If you care about what you watch, this is the service for you. Two bucks a disc
-plus a little careful reflection what it is you want to see, and you get any 
-of thousands of titles. Tens of thousands! Hundreds! ... millions?
+If you care about what you watch, this is the service for you. At two bucks a
+disc, you can watch any of thousands of titles. Tens of thousands! *HUNDREDS* of 
+thousands! ... 
 
-How many disc titles do they actually have? 
+... millions...?
+
+How many movies do they actually have? 
 
 (No one Google it.)
 
