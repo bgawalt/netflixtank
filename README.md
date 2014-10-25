@@ -52,3 +52,17 @@ The Analysis
 
 Welcome to the code base which stores my analysis of this actively-growing
 dataset. Visit [http://gawalt.com/brian](http://gawalt.com/brian) to learn more.
+
+To run any of this, get yourself set up with pip, then in your terminal:
+
+```
+$ pip install numpy
+$ pip install scipy
+$ pip install scikit-learn
+$ pip install matplotlib
+```
+
+You'll appreciate it when the plots start happening, even though they haven't
+quite yet.
+
+Anyway the naive answer is 252,328 movies.
