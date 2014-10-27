@@ -21,10 +21,24 @@ class NetflixTank(object):
                  local_csv_path="netflix_data_20141025.csv"):
         self.use_local = use_local_cache
         self.local_csv_path = local_csv_path
+        self._mat = self.get_netflix_matrix()
+        self._clm = self.clean_matrix(self._mat)
 
     def parse_date(self, s):
         t = dateparser(s)
         return time.mktime(t.timetuple())
+
+    def expected_upper_bound(self, observations, start=1):
+        k = len(observations)
+        m = max(observations) - start + 1
+        return start - 1 + m*(1 + 1.0/k) - 1
+
+    def expected_lower_bound(self, observations, end=None):
+        if end is None:
+            end = max(observations) + 1
+        flipped_obs = [end - o for o in observations]
+        flipped_ub = self.expected_upper_bound(flipped_obs)
+        return (max(flipped_obs) - flipped_ub) + min(observations)
 
 
     # CSV DOWNLOAD IS 100% RIPPED OFF FROM https://gist.github.com/cspickert/1650271
@@ -49,24 +63,34 @@ class NetflixTank(object):
             film_utc = self.parse_date(row[4])
             disc_utc = self.parse_date(row[5])
             vector = [title_serial, disc_serial, disc_type, film_utc, disc_utc]
-            print ",".join([str(vi) for vi in vector])
             vectors.append(vector)
         return np.array(vectors)
-
 
     def clean_matrix(self, m):
         return np.array([r for r in m if
                          all((ri != INVALID_SERIAL_NUMBER for ri in r))])
 
+    def get_title_numbers(self):
+        return self._mat[:,0]
+
 
 if __name__ == "__main__":
     use_local = "local" in sys.argv
-    nflx = NetflixTank(use_local_cache=use_local)
-    raw_mat = nflx.get_netflix_matrix()
-    clean_mat = nflx.clean_matrix(raw_mat)
-    plt.plot(raw_mat[:, 0], raw_mat[:, 3], 'bo', alpha=0.8)
-    plt.plot(raw_mat[:, 0], raw_mat[:, 4], 'ro', alpha=0.8)
-    plt.grid()
-    plt.show()
+    n = NetflixTank(use_local_cache=use_local)
+
+    obs = n.get_title_numbers()
+
+    #Estimate 1:
+    print n.expected_upper_bound(obs)
+
+    #Estimate 2:
+    lb = 1
+    for a in xrange(10):
+        ub = n.expected_upper_bound(obs, lb)
+        lb = n.expected_lower_bound(obs, ub)
+        if lb < 1:
+            lb = 1
+        print '\t', lb, min(obs), max(obs), ub
+    print ub - lb + 1
 
 

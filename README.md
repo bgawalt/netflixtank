@@ -62,7 +62,34 @@ $ pip install scikit-learn
 $ pip install matplotlib
 ```
 
-You'll appreciate it when the plots start happening, even though they haven't
-quite yet.
+Though I may not wind up needing all of these, the plotting library is already
+paying dividends.
 
-Anyway the naive answer is 252,328 movies.
+Estimate 1: 253,328 titles
+--------------------------
+
+If we take the maximum serial number seen for any title, and given that we have
+a total of 30 observations, simple application of the MVUE formula
+gives a total of **252,328 movies.**
+
+Estimate 2: 241,985 titles
+--------------------------
+
+Estimate 1 is based on a number of assumptions. A major on is that the titles 
+are numbered sequentially, starting from 00001. I'm not sure how realistic that
+is, but we can easily repurpose our existing model of "predict an upper bound
+on the number of titles given these observed serials and assuming a lower bound
+of 1" to the more general "predict an upper bound given these serials and 
+assuming a lower bound of `A`", and even to "predict a *lower* bound given these 
+serials and assuming an *upper* bound of `Z`".
+
+If we iterate back and forth between these last two modified formula -- 
+estimating an upper bound given a lower bound estimate, then estimating a new 
+lower bound assuming this new upper bound -- we'll slowly converge to a stable
+estimate of the range.
+
+Given the title serials we have here, that estimate comes to 241,984.97. The
+lower bound is estimated at 10010.03. I take this lower bound's proximity to
+an even 10,000 to be a generally positive signal. We don't have any four-digit
+serials in the dataset, and I'm glad it's only 10 away from the nice, round, 
+obvious start-counter of 10L, instead of being, say, 10,500 or so.
