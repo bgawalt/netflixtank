@@ -88,8 +88,10 @@ estimating an upper bound given a lower bound estimate, then estimating a new
 lower bound assuming this new upper bound -- we'll slowly converge to a stable
 estimate of the range.
 
-Given the title serials we have here, that estimate comes to 241,984.97. The
-lower bound is estimated at 10010.03. I take this lower bound's proximity to
+Given the title serials we have here, a count estimate by this method comes to 
+**241,984.97 movies.**
+ 
+The lower bound is estimated at 10010.03. I take this lower bound's proximity to
 an even 10,000 to be a generally positive signal. We don't have any four-digit
 serials in the dataset, and I'm glad it's only 10 away from the nice, round, 
 obvious start-counter of 10L, instead of being, say, 10,500 or so.

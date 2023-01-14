@@ -17,16 +17,17 @@ DISC_TYPES = {'dvd': 0, 'br': 1}
 
 class NetflixTank(object):
 
-    def __init__(self, use_local_cache=True,
-                 local_csv_path="netflix_data_20141025.csv"):
+    def __init__(self, use_local_cache=False,
+                 local_csv_path="netflix_data_20141031.csv"):
         self.use_local = use_local_cache
         self.local_csv_path = local_csv_path
         self._mat = self.get_netflix_matrix()
+        self._num_films = self._mat.shape[0]
         self._clm = self.clean_matrix(self._mat)
 
     def parse_date(self, s):
         t = dateparser(s)
-        return time.mktime(t.timetuple())
+        return float(time.mktime(t.timetuple()))/(3600*24*365) + 1970
 
     def expected_upper_bound(self, observations, start=1):
         k = len(observations)
@@ -39,7 +40,6 @@ class NetflixTank(object):
         flipped_obs = [end - o for o in observations]
         flipped_ub = self.expected_upper_bound(flipped_obs)
         return (max(flipped_obs) - flipped_ub) + min(observations)
-
 
     # CSV DOWNLOAD IS 100% RIPPED OFF FROM https://gist.github.com/cspickert/1650271
     def get_netflix_matrix(self):
@@ -70,8 +70,26 @@ class NetflixTank(object):
         return np.array([r for r in m if
                          all((ri != INVALID_SERIAL_NUMBER for ri in r))])
 
-    def get_title_numbers(self):
-        return self._mat[:,0]
+    def _disc_type_inds(self,disc_type):
+        if disc_type in DISC_TYPES:
+            return self._mat[:, 2] == DISC_TYPES[disc_type]
+        return xrange(self._num_films)
+
+    def get_title_numbers(self, disc_type='all'):
+        rows = self._disc_type_inds(disc_type)
+        return self._mat[rows, 0]
+
+    def get_disc_numbers(self, disc_type='all'):
+        rows = self._disc_type_inds(disc_type)
+        return [n for n in self._mat[rows, 1] if n != INVALID_SERIAL_NUMBER]
+
+    def get_film_utcs(self, disc_type='all'):
+        rows = self._disc_type_inds(disc_type)
+        return self._mat[rows, 3]
+
+    def get_disc_utcs(self, disc_type='all'):
+        rows = self._disc_type_inds(disc_type)
+        return self._mat[rows, 4]
 
 
 if __name__ == "__main__":
@@ -92,5 +110,7 @@ if __name__ == "__main__":
             lb = 1
         print '\t', lb, min(obs), max(obs), ub
     print ub - lb + 1
+
+    # Estimate 3: Split by Disc Type
 
 
